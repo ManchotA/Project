@@ -31,10 +31,11 @@ root = Tk() #creation de la fenetre
 root.geometry(resolutionstr) #definiton de sa taille
 
 #Definition des variables
-pos=[[50,750-reso,0,0,[50,150],[750-reso,750-reso],0.5, 0.5, 100, 0],[250,750-reso,0,0,[250,250],[750-reso,750-reso],0.5, 0.5, 1, 0],
-     [450,750-reso,0,0,[450,450],[750-reso,750-reso],0.5, 0.5, 1, 0],[650,750-reso,0,0,[650,650],[750-reso,750-reso],0.5, 0.5, 1, 0],
-     [850,750-reso,0,0,[850,850],[750-reso,750-reso],0.5, 0.5, 1, 0],[1050,750-reso,0,0,[1050,1050],[750-reso,750-reso],0.5, 0.5, 1, 0]]
-#/\ List des blocs avec les informations dans l'ordre : position a l'origine en X(0), position a l'origine en Y(1), vitess de l'objet horizontalement (2), vitess de l'objet verticalement(3), positions en X au dernier tour de boucle et a l'actuel (4), positions en Y au dernier tour de boucle et a l'actuel (5), gain de vitesse en Y a chaque tour de boucle a savoir le facteur de gravité(6), facteur de rebondissement (7), masse de l'objet(8), Sert juste a savoir a quel moment l'objet passe d'aller vers la haut a vers le bas pour remetre a 0 son facteur de gravité(9),
+pos=[[50,750-reso,0,0,[50,150],[750-reso,750-reso],0.5, 0.5, 1, 0, True],[250,750-reso,0,0,[250,250],[750-reso,750-reso],0.5, 0.5, 1, 0, True],
+     [450,750-reso,0,0,[450,450],[750-reso,750-reso],0.5, 0.5, 1, 0, True],[650,750-reso,0,0,[650,650],[750-reso,750-reso],0.5, 0.5, 1, 0, True],
+     [850,750-reso,0,0,[850,850],[750-reso,750-reso],0.5, 0.5, 1, 0, True],[1050,750-reso,0,0,[1050,1050],[750-reso,750-reso],0.5, 0.5, 1, 0, True]]
+#/\ List des blocs avec les informations dans l'ordre : position a l'origine en X(0), position a l'origine en Y(1), vitess de l'objet horizontalement (2), vitess de l'objet verticalement(3), positions en X au dernier tour de boucle et a l'actuel (4), positions en Y au dernier tour de boucle et a l'actuel (5), gain de vitesse en Y a chaque tour de boucle a savoir le facteur de gravité(6), facteur de rebondissement (7), masse de l'objet(8), Sert juste a savoir a quel moment l'objet passe d'aller vers la haut a vers le bas pour remetre a 0 son facteur de gravité(9), savoir si il est ou non sur un mur(10)
+mur=[[0, 200, 200, 400],[700, 500, 1200, 700]]
 for i in range(len(pos)) :
     if pos[i][4][0]!=pos[i][0] :
         pos[i][4][0]=pos[i][0]
@@ -67,7 +68,7 @@ def tksleep(self, time:float) -> None :
 #Fonction principale
 
 def Affichage() :
-    global SELECTION,pos,ge,tkoezq2,tkoezq,a,b,rect,tuto1c,Tuto #variable defini en global
+    global SELECTION,pos,ge,a,b,rect,tuto1c,Tuto #variable defini en global
     while not fin : #boucle generale
         ge+=1 #compteur mis a jour
 
@@ -90,30 +91,33 @@ def Affichage() :
             fond.create_rectangle(pos[i][0], pos[i][1], pos[i][0]+reso, pos[i][1]+reso, fill="#5A5A5A")
             fond.create_text(pos[i][0]+reso/2, pos[i][1]+reso/2, text=i, font=("arial", 15, "bold italic"))
 
+        for i in range(len(mur)) :
+            fond.create_rectangle(mur[i][0], mur[i][1], mur[i][2], mur[i][3], fill="grey")
+
         #Position de la souris 
         a,b=ceil(root.winfo_pointery() - root.winfo_rooty() - CurseurY), floor(root.winfo_pointerx() - root.winfo_rootx() - CurseurX)
         
         #Affichage des tuto
         if Tuto==0 : #Premier tuto
-            fond.create_text(resox/2, resoy/4, text="Selectionnez un cube avec le clic gauche\nmaintenu et deplacez le en\nbougant la souris", font=("arial", 15))
+            fond.create_text(resox/2, resoy/4, text="Sélectionnez un cube avec le clic gauche\nmaintenu et déplacez-le en\nbougeant la souris.", font=("arial", 15))
         elif Tuto==1 : #Deuxieme tuto
             if tuto1c==0 :
                 tuto1c=ge
-            fond.create_text(resox/2, resoy/4, text="Les cubes sont soumis a des forces artificiel\net ils peuvent entrer en collisions\nentre eux et avec les murs", font=("arial", 15))
+            fond.create_text(resox/2, resoy/4, text="Les cubes sont soumis à des forces artificielles\net peuvent entrer en collision\nentre eux et avec les murs.", font=("arial", 15))
             if ge-tuto1c==500 : #au bout de 500 tours, le tuto change
                 Tuto=2
                 tuto1c=0
         elif Tuto==2 : #Troisieme tuto
             if tuto1c==0 :
                 tuto1c=ge
-            fond.create_text(resox/2, resoy/4, text="maj+K produit un bug artificiel qui stop l'application\nE produit une explosion invisible qui expulse les cubes\nP reinitialise la position et vitesse de tous les cubes", font=("arial", 15))
+            fond.create_text(resox/2, resoy/4, text="Les touches :\n- Maj+K produit un bug artificiel qui stoppe l'application.\n- E produit une explosion invisible qui expulse les cubes.\n- P réinitialise la position et la vitesse de tous les cubes.", font=("arial", 15))
             if ge-tuto1c==500 : #au bout de 500 tours, le tuto s'arrete
                 Tuto=3
                 tuto1c=0
         elif Tuto==3 : #Deuxieme tuto
             if tuto1c==0 :
                 tuto1c=ge
-            fond.create_text(resox/2, resoy/4, text="Pour modifier le poid, la position ou le rebondissement\ndes carré, il faut le faire dans le code directement\ndans la definition de la variable pos", font=("arial", 15))
+            fond.create_text(resox/2, resoy/4, text="Pour modifier le poids, la position ou le rebondissement\ndes carrés, vous devez le faire dans le code directement\ndans la définition de la variable.", font=("arial", 15))
             if ge-tuto1c==500 : #au bout de 500 tours, le tuto change
                 Tuto=4
                 tuto1c=0
@@ -166,12 +170,12 @@ def Affichage() :
                     pos[i][2]-=FRICTION #cette vitesse perd la valeur fixé des frottements
                 elif pos[i][2]<0 : #et si elle est negative...
                     pos[i][2]+=FRICTION #elle perd la valeur frottements
-                if pos[i][1]<resoy-50-reso and gezy==0 : #si le cube peut bouger sur l'axe Y
+                if pos[i][1]<resoy-50-reso and gezy==0 and pos[i][10] : #si le cube peut bouger sur l'axe Y
                     pos[i][3]+=pos[i][6] #La vitesse en Y gagne donc son facteur de gravité
                     pos[i][6]*=GRAVITE #et ce facteur est mis a jour selon la constante de la gravité fixé, ca sert a faire tomber le cube de plus en plus vite
                 
                 else : #et si le cube ne peut pas bouger
-                    if gezy==0 : #si le cube est donc sous le sol (si il heurt le sol)
+                    if gezy==0 and pos[i][10] : #si le cube est donc sous le sol (si il heurt le sol)
                         gik=True #reinitialisation de la variable
                         rkso=1 #reinitialisation de la variable
                         if pos[i][3]!=0 : #si le cube n'est pas immobile en Y
@@ -230,12 +234,55 @@ def Affichage() :
             
             fond.create_line(pos[i][0]+reso/2, pos[i][1]+reso/2, pos[i][0]+reso/2+pos[i][2]*10, pos[i][1]+reso/2+pos[i][3]*10)
 
+            if i==0 :
+                print(pos[i][5], pos[i][3])
+
+            cpt=False
+            for j in range(len(mur)) :
+                if abs(((mur[j][2]-mur[j][0])/2+mur[j][0])-(pos[i][0]+pos[i][2]+reso/2))<=abs(mur[j][2]-mur[j][0])/2+reso/2 and abs(((mur[j][3]-mur[j][1])/2+mur[j][1])-(pos[i][1]+pos[i][3]+reso/2))<=abs(mur[j][3]-mur[j][1])/2+reso/2 :
+                    pos[i][2]*=-pos[i][7]
+                    pos[i][0]+=pos[i][2]
+                    pos[i][4][0]=pos[i][4][1]
+                    pos[i][4][1]=pos[i][0]
+
+                    print((pos[i][5], pos[i][3]))
+                    if abs(pos[i][3])>2 :
+                        pos[i][3]*=-pos[i][7]
+                    else :
+                        pos[i][3]=0
+                        pos[i][10]=False
+                        cpt=True
+                        pos[i][1]=mur[j][1]-reso
+                        pos[i][5]=[mur[j][1]-reso,mur[j][1]-reso]
+                    pos[i][1]+=pos[i][3]
+                    pos[i][5][0]=pos[i][5][1]
+                    pos[i][5][1]=pos[i][1]
+            if not cpt :
+                pos[i][10]=True
+
             #Maintenant pour les colisions
             for j in range(len(pos)) :  #On regarde pour tout les autres cubes
                 if i!=j : #On enleve de la selection le cube en cours dans la boucle principale
-                    if abs(pos[i][0]+pos[i][2]-pos[j][0])<reso and abs(pos[i][1]+pos[i][3]-pos[j][1])<reso : #Si les coordonné sont differente de la valeur de la taille des cubes
+                    if abs(pos[i][0]+pos[i][2]-(pos[j][0]+pos[j][2]))<=reso and abs(pos[i][1]+pos[i][3]-(pos[j][1]+pos[j][3]))<=reso : #Si les coordonné sont differente de la valeur de la taille des cubes
                         pos[i][6]=0.5 #Les facteur de gravité sont reinitialiser
                         pos[j][6]=0.5
+                        if abs(pos[i][2])<=1 and abs(pos[j][2])<=1 and abs(pos[i][3])<=1 and abs(pos[j][3])<=1 and abs(pos[i][1]-pos[j][1])<reso :
+                            if pos[i][0]>pos[j][0] :
+                                pos[i][0]+=reso
+                                pos[i][4][0]+=reso
+                                pos[i][4][1]+=reso
+                            elif pos[i][0]<pos[j][0] :
+                                pos[i][0]-=reso
+                                pos[i][4][0]-=reso
+                                pos[i][4][1]-=reso
+                            if pos[i][1]>pos[j][1] :
+                                pos[i][1]+=reso
+                                pos[i][5][0]+=reso
+                                pos[i][5][1]+=reso
+                            elif pos[i][1]<pos[j][1] :
+                                pos[i][1]-=reso
+                                pos[i][5][0]-=reso
+                                pos[i][5][1]-=reso
                         #Cette formule est chargé du transfert d'energie et donc de vitesse
                         gezef=pos[j][2]
                         pos[j][2]=((pos[j][8]*pos[j][2]+pos[i][8]*pos[i][2]-pos[i][8]*(pos[j][2]-pos[i][2]))/(pos[j][8]+pos[i][8]))*pos[j][7]
@@ -274,7 +321,7 @@ def BUG(evt) :
 #Fonction lié au bouton p
 def debug(evt) :
     global pos
-    pos=posS[:] #l'ensemble des blocs sont remis a leur place de base
+    pos=copy.deepcopy(posS) #l'ensemble des blocs sont remis a leur place de base
 
 def Explosion(evt) :
     global pos
