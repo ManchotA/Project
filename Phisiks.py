@@ -35,7 +35,7 @@ pos=[[50,750-reso,0,0,[50,150],[750-reso,750-reso],0.5, 0.5, 1, 0, True],[250,75
      [450,750-reso,0,0,[450,450],[750-reso,750-reso],0.5, 0.5, 1, 0, True],[650,750-reso,0,0,[650,650],[750-reso,750-reso],0.5, 0.5, 1, 0, True],
      [850,750-reso,0,0,[850,850],[750-reso,750-reso],0.5, 0.5, 1, 0, True],[1050,750-reso,0,0,[1050,1050],[750-reso,750-reso],0.5, 0.5, 1, 0, True]]
 #/\ List des blocs avec les informations dans l'ordre : position a l'origine en X(0), position a l'origine en Y(1), vitess de l'objet horizontalement (2), vitess de l'objet verticalement(3), positions en X au dernier tour de boucle et a l'actuel (4), positions en Y au dernier tour de boucle et a l'actuel (5), gain de vitesse en Y a chaque tour de boucle a savoir le facteur de gravité(6), facteur de rebondissement (7), masse de l'objet(8), Sert juste a savoir a quel moment l'objet passe d'aller vers la haut a vers le bas pour remetre a 0 son facteur de gravité(9), savoir si il est ou non sur un mur(10)
-mur=[[0, 200, 200, 400],[700, 500, 1200, 700]]
+mur=[]
 for i in range(len(pos)) :
     if pos[i][4][0]!=pos[i][0] :
         pos[i][4][0]=pos[i][0]
