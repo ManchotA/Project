@@ -21,6 +21,7 @@ S=False
 D=False
 O=False
 B=False
+Tuto=300
 
 def tksleep(self, time:float) -> None :
     self.after(int(time), self.quit)
@@ -38,7 +39,7 @@ def VECTEUR1(X1, Y1, X2, Y2, T) :
 Bloc[4]=VECTEUR1(Bloc[0], Bloc[1], (resox/2+INFO[0]), (resoy/2+INFO[1]), 1000)
 
 def Affichage() :
-    global a,Bloc
+    global a,Bloc,Tuto
     while not fin :
         a+=1
         for w in root.winfo_children():
@@ -49,6 +50,12 @@ def Affichage() :
         fond.create_rectangle(0, resoy/2+INFO[1], resox, resoy, fill="green")
 
         fond.create_oval(resox/2+INFO[0]-10, resoy/2+INFO[1]-10, resox/2+INFO[0]+10, resoy/2+INFO[1]+10, fill="black")
+
+        if Tuto>0 :
+            Tuto-=1
+            fond.create_text(resox/2, 100, text="Deplacez le bloc avec Q/D horizntalement", font=("arial", 20))
+            fond.create_text(resox/2, 130, text="Deplacez le bloc avec Espace/ShiftL verticalement", font=("arial", 20))
+            fond.create_text(resox/2, 160, text="Deplacez le bloc avec Z/S en profondeur", font=("arial", 20))
 
         Bloc[2]=100-Bloc[3]/10
         if Bloc[3]>0 :
