@@ -38,6 +38,7 @@ Z1=False
 Q1=False
 S1=False
 D1=False
+Tuto=300
 
 def tksleep(self, time:float) -> None :
     self.after(int(time), self.quit)
@@ -105,7 +106,7 @@ def Menu() :
     btn.place(x=resox/2-80, y=400)
 
 def Affichage() :
-    global posX,posY,fin,a,pos,vie,cooldown,vitessedebris,tailledebris,posX1,posY1,vie1,point,point1,b
+    global posX,posY,fin,a,pos,vie,cooldown,vitessedebris,tailledebris,posX1,posY1,vie1,point,point1,b,Tuto
     while not fin :
         for w in root.winfo_children():
             w.destroy()
@@ -114,6 +115,9 @@ def Affichage() :
         fond.pack()
         a+=1
         b+=1
+        if Tuto>0 :
+            Tuto-=1
+            fond.create_text(resox/2, 200, text="J1 : Bougez avec Z/Q/S/D\nJ2 : Bougez avec O/K/L/M\nW pour mettre pause", font=("arial", 15), fill="white")
         if a>=cooldown :
             if POINT :
                 point+=1
@@ -320,9 +324,6 @@ def l_r(evt) :
     global S1
     S1=False
 
-def BUG(evt) :
-    print(rezteztezr)
-
 def pause(evt) :
     global PA,fin
     if PA :
@@ -349,7 +350,6 @@ root.bind("<KeyPress-o>", o_p)
 root.bind("<KeyRelease-o>", o_r)
 root.bind("<KeyPress-l>", l_p)
 root.bind("<KeyRelease-l>", l_r)
-root.bind("<K>", BUG)
 root.bind("<w>", pause)
 Menu()
 
