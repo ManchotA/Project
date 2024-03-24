@@ -21,6 +21,7 @@ A=0
 difi=1
 vit=10
 tai=25
+Tuto=300
 
 def tksleep(self, time:float) -> None :
     self.after(int(time), self.quit)
@@ -45,15 +46,6 @@ def restart(evt) :
     tai=25
     Affichage()
 
-def reco(evt) :
-    global fin
-    if cheat==1 :
-        fin=False
-
-def plucheat(evt) :
-    global cheat
-    cheat=0
-
 def dellist(a) :
     b=[]
     for i in range(len(a)) :
@@ -62,7 +54,7 @@ def dellist(a) :
     return b
 
 def Affichage() :
-    global pos, score, tps, A, fin, difi, vit, tai
+    global pos, score, tps, A, fin, difi, vit, tai, Tuto
     while not fin :
         A+=1
         a,b=ceil(root.winfo_pointery() - root.winfo_rooty()), floor(root.winfo_pointerx() - root.winfo_rootx())
@@ -73,6 +65,10 @@ def Affichage() :
         fond.pack()
         fond.create_rectangle(500, 50, 900, 1000, fill="grey")
         fond.create_text(1150, 125, text=score, font=("arial", 10, "bold italic"))
+        if Tuto>0 :
+            Tuto-=1
+            fond.create_text(700, 200, text="<------------------>", font=("arial", 30))
+            fond.create_text(700, 230, text="Bouez la souris pour deplacer le serpent", font=("arial", 30))
         if b-10<=500 :
             b=510
         if b+10>=900 :
@@ -111,7 +107,5 @@ def Affichage() :
         tksleep(root,10)
 
 root.bind('w',restart)
-root.bind('p',reco)
-root.bind('x',plucheat)
 Affichage()
 root.mainloop()
