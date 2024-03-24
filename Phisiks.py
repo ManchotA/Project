@@ -296,51 +296,52 @@ def Affichage():
         rect=False
         tksleep(root, 10) #Si il y a un while en tkinter, le programme va exécuter l'ensemble de la boucle sans actualiser la fenêtre si le while s'effectue trop vite. Donc pour rallonger le while, on utilise cette fonction (Le sleep a le même problème)
 
-#Fonction lié au relachement du clique gauche
-def on_button_release(evt) :
+#Fonction liée au relâchement du clic gauche
+def on_button_release(evt):
     global SELECTION
-    SELECTION=-1 #le cube selectionner revient a sa base
+    SELECTION=-1 #le cube sélectionné revient à sa base
 
-#Fonction lié a l'appuie du clique gauche
-def KLIK(evt) :
+#Fonction liée à l'appui du clic gauche
+def KLIK(evt):
     global SELECTION, Tuto
-    a,b=ceil(root.winfo_pointery() - root.winfo_rooty() - CurseurY), floor(root.winfo_pointerx() - root.winfo_rootx() - CurseurX) #La position de la souris
-    for i in range(len(pos)) : #dans tout les cubes...
-        if b>pos[i][0] and b<pos[i][0]+reso : #... si il y en a un qui a ses coordonné en X qui encadre la position de la souris...
-            if a>pos[i][1] and a<pos[i][1]+reso : #... et si ses coordonnées en Y encadre la position Y de la souris alors...
-                SELECTION=i #...le cube avec ces coordonnées est alors selectionné
-                if Tuto==0 : #Si la premiere etape du tuto est accompli...
-                    Tuto=1 #... la deuxieme etape se lance
+    a,b=ceil(root.winfo_pointery()-root.winfo_rooty()-CurseurY),floor(root.winfo_pointerx()-root.winfo_rootx()-CurseurX) # La position de la souris
+    for i in range(len(pos)): #Dans tous les cubes...
+        if b>pos[i][0] and b<pos[i][0]+reso: #...s'il y en a un qui a ses coordonnées en X qui encadrent la position de la souris...
+            if a>pos[i][1] and a<pos[i][1]+reso: #...et si ses coordonnées en Y encadrent la position Y de la souris alors...
+                SELECTION=i #...le cube avec ces coordonnées est alors sélectionné
+                if Tuto==0: #Si la première étape du tutoriel est accomplie...
+                    Tuto=1 #...la deuxième étape se lance
 
-#De base le tp du bloc se faisait lors du detection du maintien du clique gauche mais il y avait des bugs de transport donc elle s=ne sert plus a rien mais reste en symbole du passé
-def CLIC(evt) :
+#De base, le tp du bloc se faisait lors de la détection du maintien du clic gauche mais il y avait des bugs de transport donc elle ne sert plus à rien mais reste en symbole du passé
+def CLIC(evt):
     global pos
     1==1
 
-#Fonction qui genere un bug volontaire pour diverse raison mais pas utilie au programme fini
-def BUG(evt) :
+#Fonction qui génère un bug volontaire pour diverses raisons mais pas utile au programme fini
+def BUG(evt):
     print(efcdwfsgeswd)
 
-#Fonction lié au bouton p
-def debug(evt) :
+#Fonction liée au bouton P
+def debug(evt):
     global pos
-    pos=copy.deepcopy(posS) #l'ensemble des blocs sont remis a leur place de base
+    pos=copy.deepcopy(posS) #l'ensemble des blocs est remis à leur place de base
 
-def Explosion(evt) :
+def Explosion(evt):
     global pos
-    a,b=ceil(root.winfo_pointery() - root.winfo_rooty() - CurseurY), floor(root.winfo_pointerx() - root.winfo_rootx() - CurseurX)
-    for i in range(len(pos)) :
+    a,b=ceil(root.winfo_pointery()-root.winfo_rooty()-CurseurY),floor(root.winfo_pointerx()-root.winfo_rootx()-CurseurX)
+    for i in range(len(pos)):
         pos[i][2]=-(b-pos[i][0])*1/((sqrt(abs(pos[i][0]-b)**2+abs(pos[i][1]-a)**2))/50)
         pos[i][3]=-(a-pos[i][1])*1/((sqrt(abs(pos[i][0]-b)**2+abs(pos[i][1]-a)**2))/50)
 
-root.bind("<B1-Motion>", CLIC) #lie le maintien du clique gauche a la fonction CLIC
-root.bind("<Button-1>", KLIK) #lie l'appuie du clique gauche a la fonction KLIK
-root.bind("<ButtonRelease-1>", on_button_release) #lie le relachement du clique gauche a la fonction on_button_release
-root.bind("<K>", BUG) #lie l'appuie de maj+k a la fonction BUG
-root.bind("<p>", debug) #lie l'appuie de la touche p a la fonction debug
-root.bind("<e>", Explosion) #lie l'appuie de la touche p a la fonction debug
-Affichage() #Lance la fonction de base au debut du code
-root.mainloop() #Definie la boucle principale de la fenetre
+root.bind("<B1-Motion>", CLIC) #lie le maintien du clic gauche à la fonction CLIC
+root.bind("<Button-1>", KLIK) #lie l'appui du clic gauche à la fonction KLIK
+root.bind("<ButtonRelease-1>", on_button_release) #lie le relâchement du clic gauche à la fonction on_button_release
+root.bind("<K>", BUG) #lie l'appui de Maj+K à la fonction BUG
+root.bind("<p>", debug) #lie l'appui de la touche P à la fonction debug
+root.bind("<e>", Explosion) #lie l'appui de la touche E à la fonction Explosion
+Affichage() #Lance la fonction de base au début du code
+root.mainloop() #Définit la boucle principale de la fenêtre
+
 
 
 
