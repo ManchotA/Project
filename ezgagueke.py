@@ -68,7 +68,8 @@ def Affichage() :
         if Tuto>0 :
             Tuto-=1
             fond.create_text(700, 200, text="<------------------>", font=("arial", 30))
-            fond.create_text(700, 230, text="Bouez la souris pour deplacer le serpent et w pour relancer", font=("arial", 30))
+            fond.create_text(700, 230, text="Bouez la souris pour deplacer le serpent", font=("arial", 30))
+            fond.create_text(700, 260, text="et w pour relancer", font=("arial", 30))
         if b-10<=500 :
             b=510
         if b+10>=900 :
