@@ -236,17 +236,18 @@ def Affichage() :
 
             if i==0 :
                 print(pos[i][5], pos[i][3])
-
+            #Gestion des murs
             cpt=False
             for j in range(len(mur)) :
+                #Collision
                 if abs(((mur[j][2]-mur[j][0])/2+mur[j][0])-(pos[i][0]+pos[i][2]+reso/2))<=abs(mur[j][2]-mur[j][0])/2+reso/2 and abs(((mur[j][3]-mur[j][1])/2+mur[j][1])-(pos[i][1]+pos[i][3]+reso/2))<=abs(mur[j][3]-mur[j][1])/2+reso/2 :
                     pos[i][2]*=-pos[i][7]
                     pos[i][0]+=pos[i][2]
                     pos[i][4][0]=pos[i][4][1]
                     pos[i][4][1]=pos[i][0]
 
-                    print((pos[i][5], pos[i][3]))
-                    if abs(pos[i][3])>2 :
+                    #Changement des rebon
+                    if abs(pos[i][3])>2 : 
                         pos[i][3]*=-pos[i][7]
                     else :
                         pos[i][3]=0
