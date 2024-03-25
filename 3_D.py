@@ -53,7 +53,7 @@ def Affichage() :
 
         if Tuto>0 :
             Tuto-=1
-            fond.create_text(resox/2, 100, text="Deplacez le bloc avec Q/D horizntalement", font=("arial", 20))
+            fond.create_text(resox/2, 100, text="Deplacez le bloc avec Q/D horizontalement", font=("arial", 20))
             fond.create_text(resox/2, 130, text="Deplacez le bloc avec Espace/ShiftL verticalement", font=("arial", 20))
             fond.create_text(resox/2, 160, text="Deplacez le bloc avec Z/S en profondeur", font=("arial", 20))
 
